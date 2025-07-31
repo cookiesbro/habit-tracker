@@ -1,0 +1,38 @@
+<!-- frontend/index.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Трекер Привычек</title>
+    <!-- Подключаем наш файл со стилями -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Мои Привычки</h1>
+
+        <!-- Форма для добавления новой привычки -->
+        <form id="add-habit-form" class="habit-form">
+            <input 
+                type="text" 
+                id="habit-input" 
+                placeholder="Например, делать зарядку" 
+                required 
+            />
+            <button type="submit">Добавить</button>
+        </form>
+
+        <!-- Сюда мы будем добавлять список привычек с помощью JavaScript -->
+        <h2>Список привычек:</h2>
+        <ul id="habits-list">
+            <!-- Пример того, как будет выглядеть элемент списка -->
+            <!-- <li>Читать 20 страниц <button class="delete-btn">Удалить</button></li> -->
+        </ul>
+    </div>
+
+    <!-- Подключаем наш JavaScript-файл перед закрывающим тегом body -->
+    <script src="script.js"></script>
+</body>
+</html>

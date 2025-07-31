@@ -1,0 +1,31 @@
+
+version: '3.8'
+
+services:
+  # Наш бэкенд-сервис
+  backend:
+    build: ./backend
+    container_name: habit-tracker-backend-compose
+    restart: unless-stopped
+    environment:
+      - MONGO_URI=${MONGO_URI}
+    # Порт 3000 больше не нужно пробрасывать наружу,
+    # т.к. весь трафик теперь идет через Nginx.
+    # Это безопаснее.
+
+  # Наш фронтенд-сервис
+  frontend:
+    build: ./frontend
+    container_name: habit-tracker-frontend-compose
+    restart: unless-stopped
+    ports:
+      # Пробрасываем только порт 80 от Nginx наружу.
+      - "80:80"
+    volumes:
+      # "Монтируем" наш кастомный конфиг Nginx внутрь контейнера,
+      # заменяя им стандартный.
+      - ./frontend/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      # Говорим, что фронтенд зависит от бэкенда.
+      # Docker Compose сначала запустит бэкенд и только потом фронтенд.
+      - backend
