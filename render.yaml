@@ -7,7 +7,6 @@ services:
     envVars:
       - key: MONGO_URI
         fromSecret: true 
-
   - type: web
     name: habit-tracker-frontend
     runtime: static
