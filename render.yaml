@@ -14,7 +14,7 @@ services:
         fromSecret: true 
 
   # --- Наш Фронтенд-сервис ---
-  - type: static  
+  - type: static_site
     name: habit-tracker-frontend
     repo: https://github.com/cookiesbro/habit-tracker 
     # Настройки для монорепозитория:
