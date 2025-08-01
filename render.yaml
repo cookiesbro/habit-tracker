@@ -20,7 +20,6 @@ services:
     repo: https://github.com/cookiesbro/habit-tracker 
     # Настройки для монорепозитория:
     rootDir: frontend
-    publishDir: .
     routes:
       - type: rewrite # Тип правила - Rewrite
         source: /api/(.*) # Все, что начинается с /api/
