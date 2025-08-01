@@ -1,0 +1,27 @@
+
+services:
+  # --- Наш Бэкенд-сервис ---
+  - type: web   
+    name: habit-tracker-backend
+    runtime: docker 
+    repo: https://github.com/cookiesbro/habit-tracker
+    # Настройки для монорепозитория:
+    rootDir: backend
+    # Переменные окружения:
+    envVars:
+      - key: MONGO_URI
+        # создать секрет с таким именем. Он сам попросит ввести значение.
+        fromSecret: true 
+
+  # --- Наш Фронтенд-сервис ---
+  - type: static  
+    name: habit-tracker-frontend
+    repo: https://github.com/cookiesbro/habit-tracker 
+    # Настройки для монорепозитория:
+    rootDir: frontend
+    publishDir: .
+    routes:
+      - type: rewrite # Тип правила - Rewrite
+        source: /api/(.*) # Все, что начинается с /api/
+        # Перенаправляем на бэкенд-сервис. Render сам подставит его URL.
+        destination: https://habit-tracker-backend-ni7z.onrender.com/api/$1
