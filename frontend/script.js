@@ -4,14 +4,14 @@ const habitInput = document.getElementById('habit-input');
 const habitsList = document.getElementById('habits-list');
 
 // URL нашего бэкенда API
-const API_URL = 'https://habit-tracker7.onrender.com/';
+const API_URL = 'https://habit-tracker7.onrender.com/api'; // Замените на ваш URL, если он другой
 
 // Функция для отображения привычек на странице
 async function renderHabits() {
     habitsList.innerHTML = ''; // Очищаем список перед обновлением
 
     try {
-        const response = await fetch(API_URL); // Отправляем GET-запрос на бэкенд
+        const response = await fetch(`${API_URL}/habits`); // Отправляем GET-запрос на бэкенд
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -46,7 +46,7 @@ async function addHabit(e) {
     if (!habitName) return; // Если поле пустое, ничего не делаем
 
     try {
-        const response = await fetch(API_URL, {
+        const response = await fetch(`${API_URL}/habits`, {
             method: 'POST', // Отправляем POST-запрос
             headers: {
                 'Content-Type': 'application/json', // Говорим серверу, что отправляем JSON
@@ -70,7 +70,7 @@ async function addHabit(e) {
 // Функция для удаления привычки
 async function deleteHabit(id) {
     try {
-        const response = await fetch(`${API_URL}/${id}`, {
+        const response = await fetch(`${API_URL}/habits/${id}`, {
             method: 'DELETE', // Отправляем DELETE-запрос
         });
 
