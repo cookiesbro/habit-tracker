@@ -16,5 +16,4 @@ services:
     env: docker
     dockerfilePath: ./frontend/Dockerfile
 
-    healthCheck:
-      path: /
+    healthCheckPath: /
