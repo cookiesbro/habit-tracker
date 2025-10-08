@@ -4,10 +4,11 @@ services:
     name: backend
     env: docker
     dockerfilePath: ./backend/Dockerfile
-
     envVars:
       - key: MONGO_URI
-      
+        # задаем пустое значение, чтобы YAML прошел валидацию.
+        value: ""
+
       - key: PORT
         value: 3000
 
