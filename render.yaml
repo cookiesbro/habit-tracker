@@ -1,19 +1,19 @@
 services:
+  # --- Наш Бэкенд-сервис ---
   - type: pserv
-    name: backend 
-    env: docker 
-    dockerfilePath: ./backend/Dockerfile 
+    name: backend
+    env: docker
+    dockerfilePath: ./backend/Dockerfile
 
-    # Переменные окружения для бэкенда
     envVars:
       - key: MONGO_URI
-        fromEnvironmentVar: MONGO_URI
+      
       - key: PORT
         value: 3000
 
-  - type: web 
-    name: frontend 
+  # --- Наш Фронтенд-сервис (Nginx) ---
+  - type: web
+    name: frontend
     env: docker
     dockerfilePath: ./frontend/Dockerfile
-
     healthCheckPath: /
