@@ -15,7 +15,7 @@ if (!mongoUri) {
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors()); // <-- 2. Используем middleware. ЭТО ВАЖНО!
+app.use(cors());
 // 4. Middleware для парсинга JSON
 app.use(express.json());
 

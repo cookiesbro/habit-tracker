@@ -1,20 +1,15 @@
 services:
-  # --- Наш Бэкенд-сервис ---
-  - type: pserv
-    name: backend
+  - type: web 
+    name: backend 
     env: docker
     dockerfilePath: ./backend/Dockerfile
     envVars:
       - key: MONGO_URI
-        # задаем пустое значение, чтобы YAML прошел валидацию.
-        value: ""
-
-      - key: PORT
-        value: 3000
+        value: "" 
 
   # --- Наш Фронтенд-сервис (Nginx) ---
   - type: web
-    name: frontend
+    name: frontend 
     env: docker
     dockerfilePath: ./frontend/Dockerfile
     healthCheckPath: /
