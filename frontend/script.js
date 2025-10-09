@@ -4,8 +4,8 @@ const habitInput = document.getElementById('habit-input');
 const habitsList = document.getElementById('habits-list');
 
 // URL нашего бэкенда API
-//const API_URL = 'https://habit-tracker-backend-vt2p.onrender.com/api'; // Замените на ваш реальный URL
-const API_URL = '/api/habits';
+//const API_URL = 'https://habit-tracker-backend-vt2p.onrender.com/api';
+const API_URL = '/api';
 
 // Функция для отображения привычек на странице
 async function renderHabits() {
