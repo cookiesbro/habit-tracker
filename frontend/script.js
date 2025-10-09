@@ -1,30 +1,28 @@
-// Получаем ссылки на HTML-элементы
+
 const addHabitForm = document.getElementById('add-habit-form');
 const habitInput = document.getElementById('habit-input');
 const habitsList = document.getElementById('habits-list');
 
-// URL нашего бэкенда API
-//const API_URL = 'https://habit-tracker-backend-vt2p.onrender.com/api';
-const API_URL = '/api';
+const API_BASE_URL = '/api/habits';
+
+// --- Функции для работы с API ---
 
 // Функция для отображения привычек на странице
 async function renderHabits() {
-    habitsList.innerHTML = ''; // Очищаем список перед обновлением
+    habitsList.innerHTML = '';
 
     try {
-        const response = await fetch(`${API_URL}/habits`); // Отправляем GET-запрос на бэкенд
+        const response = await fetch(API_BASE_URL);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const habits = await response.json(); // Парсим JSON-ответ
+        const habits = await response.json();
 
-        // Если привычек нет, показываем сообщение
         if (habits.length === 0) {
             habitsList.innerHTML = '<li>Пока что нет привычек. Добавьте первую!</li>';
             return;
         }
 
-        // Для каждой привычки создаем элемент списка и добавляем его на страницу
         habits.forEach(habit => {
             const listItem = document.createElement('li');
             listItem.innerHTML = `
@@ -39,68 +37,62 @@ async function renderHabits() {
     }
 }
 
-// Функция для добавления новой привычки
 async function addHabit(e) {
-    e.preventDefault(); // Предотвращаем стандартное поведение формы (перезагрузку страницы)
+    e.preventDefault();
 
-    const habitName = habitInput.value.trim(); // Получаем значение из поля ввода
-    if (!habitName) return; // Если поле пустое, ничего не делаем
+    const habitName = habitInput.value.trim();
+    if (!habitName) return;
 
     try {
-        const response = await fetch(`${API_URL}/habits`, {
-            method: 'POST', // Отправляем POST-запрос
+        const response = await fetch(API_BASE_URL, {
+            method: 'POST',
             headers: {
-                'Content-Type': 'application/json', // Говорим серверу, что отправляем JSON
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ name: habitName }), // Преобразуем объект в JSON-строку
+            body: JSON.stringify({ name: habitName }),
         });
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        // После успешного добавления, очищаем поле ввода и обновляем список привычек
         habitInput.value = '';
-        await renderHabits(); // Перезагружаем список
+        await renderHabits();
     } catch (error) {
         console.error('Ошибка при добавлении привычки:', error);
-        alert('Не удалось добавить привычку. Проверьте консоль для деталей.');
+        alert('Не удалось добавить привычку.');
     }
 }
 
-// Функция для удаления привычки
 async function deleteHabit(id) {
     try {
-        const response = await fetch(`${API_URL}/habits/${id}`, {
-            method: 'DELETE', // Отправляем DELETE-запрос
+        const response = await fetch(`${API_BASE_URL}/${id}`, {
+            method: 'DELETE',
         });
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        await renderHabits(); // Обновляем список привычек
+        await renderHabits();
     } catch (error) {
         console.error('Ошибка при удалении привычки:', error);
-        alert('Не удалось удалить привычку. Проверьте консоль для деталей.');
+        alert('Не удалось удалить привычку.');
     }
 }
+
 
 // --- Обработчики событий ---
 
-// Отправка формы: привязываем функцию addHabit к событию submit формы
 addHabitForm.addEventListener('submit', addHabit);
 
-// Обработка кликов на списке привычек (для кнопок "Удалить")
 habitsList.addEventListener('click', (e) => {
-    // Проверяем, был ли клик по кнопке с классом 'delete-btn'
     if (e.target.classList.contains('delete-btn')) {
-        const habitId = e.target.dataset.id; // Получаем ID привычки из атрибута data-id
+        const habitId = e.target.dataset.id;
         if (confirm('Вы уверены, что хотите удалить эту привычку?')) {
-            deleteHabit(habitId); // Вызываем функцию удаления
+            deleteHabit(habitId);
         }
     }
 });
 
-// Запускаем загрузку и отображение привычек при первой загрузке страницы
 document.addEventListener('DOMContentLoaded', renderHabits);
