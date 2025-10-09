@@ -1,22 +1,21 @@
-// 1. Импортируем зависимости
-require('dotenv').config(); // Загружает переменные из .env файла
+require('dotenv').config(); 
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const Habit = require('./models/Habit'); // Импортируем модель Habit
+const Habit = require('./models/Habit'); 
 
-// 2. Получаем строку подключения из переменных окружения
+//  Получаем строку подключения из переменных окружения
 const mongoUri = process.env.MONGO_URI;
 if (!mongoUri) {
   throw new Error('MONGO_URI не определена в .env файле');
 }
 
-// 3. Создаем экземпляр приложения
+//  Создаем экземпляр приложения
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
-// 4. Middleware для парсинга JSON
+//  Middleware для парсинга JSON
 app.use(express.json());
 
 // Функция для подключения к БД и запуска сервера
@@ -41,9 +40,7 @@ app.get('/', (req, res) => {
   res.send('Сервер работает! Подключение к БД успешно.');
 });
 
-// --- НАШИ НОВЫЕ API МАРШРУТЫ ---
-
-// 5. Маршрут для создания новой привычки (CREATE)
+//  Маршрут для создания новой привычки (CREATE)
 app.post('/api/habits', async (req, res) => {
   try {
     // Получаем имя привычки из тела запроса
@@ -83,7 +80,6 @@ app.put('/api/habits/:id', async (req, res) => {
     const { name } = req.body;  // Получаем новое имя из тела запроса
 
     // Находим привычку по ID и обновляем ее.
-    // { new: true } говорит Mongoose вернуть обновленный документ, а не старый.
     const updatedHabit = await Habit.findByIdAndUpdate(id, { name }, { new: true });
 
     // Если привычка с таким ID не найдена, findByIdAndUpdate вернет null
@@ -108,13 +104,10 @@ app.delete('/api/habits/:id', async (req, res) => {
       return res.status(404).json({ message: 'Привычка не найдена' });
     }
 
-    // При успешном удалении часто возвращают пустое тело со статусом 204 No Content
-    // или сообщение об успехе.
     res.status(200).json({ message: 'Привычка успешно удалена' });
   } catch (error) {
     res.status(500).json({ message: 'Ошибка при удалении привычки', error });
   }
 });
 
-// Запускаем всю нашу логику
 start();
