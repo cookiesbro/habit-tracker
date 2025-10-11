@@ -6,6 +6,7 @@
 
 ### [Посмотреть Live Demo](https://habit-tracker-lake-mu.vercel.app/)
 
+![pr2](https://github.com/user-attachments/assets/cce37a34-6ccf-4bfb-a929-bc3e668d03ab)
 
 ---
 
